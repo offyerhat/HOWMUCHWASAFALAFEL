@@ -11,16 +11,34 @@ function calculatePrice(year) {
         2013: 3.50,
         2012: 3.00,
         2011: 2.50,
-        1988: 1.00,
-        1987: 1.00,
-        1986: 1.00,
-        1985: 1.00,
-        1984: 1.00,
-        1983: 1.00,
-        1982: 1.00,
-        1981: 1.00,
-        1980: 1.00,
+        2009: 3.00,
+        2006: 2.25,
+        2001: 2.00,
+        1998: 1.50,
+        1997: 1.00,
+        1996: 1.00,
+        1995: 1.00,
+        1994: 1.00,
+        1993: 1.00,
+        1992: 1.00,
+        1991: 1.00,
+        1990: 1.00,
+        1989: 1.00,
+        1988: 0.75,
+        1987: 0.75,
+        1986: 0.75,
+        1985: 0.75,
+        1984: 0.75,
+        1983: 0.75,
+        1982: 0.75,
+        1981: 0.75,
+        1980: 0.75,
         1979: 0.75,
+        // Add responses for years before 1979
+        1978: "Falafels probably existed then (probably), but Mamoun's didn't",
+        1977: "Falafels probably existed then (probably), but Mamoun's didn't",
+        1976: "Falafels probably existed then (probably), but Mamoun's didn't",
+        // ... (continue for any years before 1976)
     };
 
     // Check if the year is in the pricing table
@@ -62,3 +80,4 @@ function calculateAdjustedPrice(year, baseYear, averageRateOfIncrease) {
     const adjustedPrice = pricingTable[baseYear] + yearsSinceBaseYear * averageRateOfIncrease;
     return Math.max(adjustedPrice, 0); // Ensure the price is non-negative
 }
+
