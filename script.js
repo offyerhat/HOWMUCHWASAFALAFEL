@@ -6,7 +6,7 @@ function calculatePrice(year) {
         2018: 4.75,
         2017: 4.50,
         2016: 4.00,
-        2015: 3.00,
+        2015: { beforeApril: 3.00, afterApril: 3.50 },
         2014: 3.50,
         2013: 3.50,
         2012: 3.00,
@@ -21,14 +21,21 @@ function calculatePrice(year) {
 
     // For years not listed, apply the average rate of increase per year
     const averageRateOfIncrease = calculateAverageRateOfIncrease(pricingTable);
-    const basePrice = pricingTable[2020]; // You can change this to another reference year if needed
+    const baseYear = Math.max(...Object.keys(pricingTable)); // Find the latest year in the table
 
-    return calculateAdjustedPrice(year, basePrice, averageRateOfIncrease);
+    return calculateAdjustedPrice(year, baseYear, averageRateOfIncrease);
 }
 
 function calculateAverageRateOfIncrease(pricingTable) {
     const years = Object.keys(pricingTable);
-    const prices = years.map(year => pricingTable[year]);
+    const prices = years.map(year => {
+        if (typeof pricingTable[year] === 'number') {
+            return pricingTable[year];
+        } else {
+            // If the entry is an object, use the average of beforeApril and afterApril
+            return (pricingTable[year].beforeApril + pricingTable[year].afterApril) / 2;
+        }
+    });
 
     // Calculate the average rate of increase
     const totalIncrease = prices.reduce((sum, price, index) => {
@@ -41,8 +48,9 @@ function calculateAverageRateOfIncrease(pricingTable) {
     return totalIncrease / (prices.length - 1);
 }
 
-function calculateAdjustedPrice(year, basePrice, averageRateOfIncrease) {
-    const yearsSinceBaseYear = 2020 - year;
-    const adjustedPrice = basePrice + yearsSinceBaseYear * averageRateOfIncrease;
+function calculateAdjustedPrice(year, baseYear, averageRateOfIncrease) {
+    const yearsSinceBaseYear = baseYear - year;
+    const adjustedPrice = pricingTable[baseYear] + yearsSinceBaseYear * averageRateOfIncrease;
     return Math.max(adjustedPrice, 0); // Ensure the price is non-negative
 }
+
