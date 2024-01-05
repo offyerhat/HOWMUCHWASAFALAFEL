@@ -11,7 +11,16 @@ function calculatePrice(year) {
         2013: 3.50,
         2012: 3.00,
         2011: 2.50,
-        1971: 0.75,
+        1988: 1.00,
+        1987: 1.00,
+        1986: 1.00,
+        1985: 1.00,
+        1984: 1.00,
+        1983: 1.00,
+        1982: 1.00,
+        1981: 1.00,
+        1980: 1.00,
+        1979: 0.75,
     };
 
     // Check if the year is in the pricing table
@@ -53,4 +62,3 @@ function calculateAdjustedPrice(year, baseYear, averageRateOfIncrease) {
     const adjustedPrice = pricingTable[baseYear] + yearsSinceBaseYear * averageRateOfIncrease;
     return Math.max(adjustedPrice, 0); // Ensure the price is non-negative
 }
-
